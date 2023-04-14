@@ -8,16 +8,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class EmployeeService implements EmployeeServiceImpl {
 
     private final EmployeeRepository repository;
+
     @Override
-    public Optional<EmployeeModel> findById(Long id) {
-        return repository.findById(id);
+    public EmployeeModel findByCpf(String cpf) {
+        return repository.findByCpf(cpf);
+    }
+
+    @Override
+    public boolean existsByCpf(String cpf) {
+        return repository.existsByCpf(cpf);
     }
 
     @Override
@@ -31,9 +36,9 @@ public class EmployeeService implements EmployeeServiceImpl {
         return repository.save(employee);
     }
 
-    @Transactional
     @Override
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public void delete(String cpf) {
+        repository.deleteByCpf(cpf);
     }
+
 }

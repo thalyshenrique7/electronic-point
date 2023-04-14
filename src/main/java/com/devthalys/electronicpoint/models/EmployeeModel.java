@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Entity(name = "employee")
@@ -25,8 +25,7 @@ public class EmployeeModel implements Serializable {
     private String cpf;
 
     @Column(nullable = false, length = 10)
-    @Temporal(TemporalType.DATE)
-    private Date datefOfBirth;
+    private LocalDate datefOfBirth;
 
     @Column(nullable = false, length = 10)
     private String registry;
