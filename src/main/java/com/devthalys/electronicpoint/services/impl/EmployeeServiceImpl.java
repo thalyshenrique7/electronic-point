@@ -16,5 +16,5 @@ public interface EmployeeServiceImpl {
 
     EmployeeModel save(EmployeeModel employee);
 
-    void delete(String cpf);
+    void deleteByCpf(String cpf);
 }

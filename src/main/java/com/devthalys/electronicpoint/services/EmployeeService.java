@@ -3,17 +3,17 @@ package com.devthalys.electronicpoint.services;
 import com.devthalys.electronicpoint.models.EmployeeModel;
 import com.devthalys.electronicpoint.repositories.EmployeeRepository;
 import com.devthalys.electronicpoint.services.impl.EmployeeServiceImpl;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Service
 public class EmployeeService implements EmployeeServiceImpl {
 
-    private final EmployeeRepository repository;
+    @Autowired
+    private EmployeeRepository repository;
 
     @Override
     public EmployeeModel findByCpf(String cpf) {
@@ -37,7 +37,7 @@ public class EmployeeService implements EmployeeServiceImpl {
     }
 
     @Override
-    public void delete(String cpf) {
+    public void deleteByCpf(String cpf) {
         repository.deleteByCpf(cpf);
     }
 

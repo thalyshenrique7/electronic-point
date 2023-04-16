@@ -8,29 +8,38 @@ import org.hibernate.validator.constraints.br.CPF;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeDto {
+public class EmployeeDto implements Serializable {
+    private static final long SerialVersionUID = 1L;
 
-    @NotBlank(message = "The name must be informed!")
+    @NotBlank(message = "{required.field.name-employee}")
     @Size(max = 70)
     private String name;
 
-    @NotBlank(message = "The address must be informed!")
+    @NotBlank(message = "{required.field.address-employee}")
     @Size(max = 70)
     private String address;
 
-    @NotBlank(message = "CPF must be informed!")
-    @CPF(message = "CPF must be valid!")
+    @NotBlank(message = "{required.field.cpf-employee}")
+    @CPF(message = "{required.field.cpf-valid}")
     private String cpf;
 
-    @NotNull(message = "Date of birth must be informed!")
+    @NotNull(message = "{required.field.dateOfBirth-employee}")
     private LocalDate dateOfBirth;
 
-    @NotBlank(message = "The registry must be informed!")
+    @NotBlank(message = "{required.field.registry-employee}")
     private String registry;
+
+    @NotNull(message = "{required.field.payment-employee}")
+    private BigDecimal payment;
+
+    @NotBlank(message = "{required.field.department-employee}")
+    private String department;
 
 }

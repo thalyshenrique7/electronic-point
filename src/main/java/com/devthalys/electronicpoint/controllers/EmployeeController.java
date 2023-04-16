@@ -1,18 +1,18 @@
 package com.devthalys.electronicpoint.controllers;
 
 import com.devthalys.electronicpoint.dtos.EmployeeDto;
-import com.devthalys.electronicpoint.exceptions.UserNotFoundException;
+import com.devthalys.electronicpoint.dtos.UpdateCredentialsDto;
+import com.devthalys.electronicpoint.exceptions.EmployeeNotFoundException;
 import com.devthalys.electronicpoint.models.EmployeeModel;
 import com.devthalys.electronicpoint.services.EmployeeService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -20,15 +20,15 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @RequestMapping("/api/employee")
-@RequiredArgsConstructor
 public class EmployeeController {
 
-    private final EmployeeService service;
+    @Autowired
+    private EmployeeService service;
 
     @GetMapping("{cpf}")
     public EmployeeModel findByCpf(@PathVariable String cpf){
         if(!service.existsByCpf(cpf)){
-            throw new UserNotFoundException("User not found in data base.");
+            throw new EmployeeNotFoundException("Employee not found in data base.");
         }
         return service.findByCpf(cpf);
     }
@@ -48,27 +48,32 @@ public class EmployeeController {
 
         var newEmployee = new EmployeeModel();
         BeanUtils.copyProperties(employee, newEmployee);
-        newEmployee.setDatefOfBirth(LocalDate.now());
         return service.save(newEmployee);
     }
 
     @Transactional
     @DeleteMapping("{cpf}")
     @ResponseStatus(NO_CONTENT)
-    public void delete(@PathVariable String cpf){
-        service.delete(cpf);
+    public void deleteByCpf(@PathVariable String cpf){
+        service.deleteByCpf(cpf);
     }
 
     @PutMapping("{cpf}")
     @ResponseStatus(NO_CONTENT)
-    public void update(@PathVariable String cpf, @RequestBody @Valid EmployeeModel employee) {
-            if (service.existsByCpf(cpf)) {
-                throw new UserNotFoundException("User not found in data base");
+    public void update(@PathVariable String cpf, @RequestBody @Valid UpdateCredentialsDto updateCredentialsDto) {
+            EmployeeModel employee = service.findByCpf(cpf);
+            if (employee == null) {
+                throw new EmployeeNotFoundException("Employee not found in data base");
             }
 
-        var newEmployee = new EmployeeModel();
-        BeanUtils.copyProperties(employee, newEmployee);
-        newEmployee.setId(employee.getId());
-        service.save(newEmployee);
+            var newEmployee = new EmployeeModel();
+            BeanUtils.copyProperties(employee, newEmployee);
+
+            newEmployee.setName(updateCredentialsDto.getName());
+            newEmployee.setAddress(updateCredentialsDto.getAddress());
+            newEmployee.setPayment(updateCredentialsDto.getPayment());
+            newEmployee.setDepartment(updateCredentialsDto.getDepartment());
+
+            service.save(newEmployee);
     }
 }

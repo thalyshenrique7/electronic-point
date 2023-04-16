@@ -1,4 +1,4 @@
-package com.devthalys.electronicpoint;
+package com.devthalys.electronicpoint.rest;
 
 import lombok.Getter;
 
@@ -9,6 +9,10 @@ import java.util.List;
 public class ApiErrors {
 
     private List<String> errors;
+
+    public ApiErrors(List<String> errors) {
+        this.errors = errors;
+    }
 
     public ApiErrors(String errorMessage) {
         this.errors = Arrays.asList(errorMessage);
