@@ -39,3 +39,6 @@ Fields in User Model is:
 </tr>
 </table>
 
+# Author
+
+> Thalys Henrique
