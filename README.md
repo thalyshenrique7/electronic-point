@@ -2,7 +2,7 @@
 
 > Status: Developing ⚠️
 
-### It is a web application planned by me, where an employee go to register your worked hours.
+### It is a web application planned by me, where an employee can register your worked hours.
 
 Fields in Employee Model is:
 
