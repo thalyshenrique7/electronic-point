@@ -15,6 +15,12 @@ Fields in Employee Model is:
 + payment of employee
 + department of employee
 
+Fields in Electronic Point is:
++ id
++ initialHour
++ finalHour
++ duration
+
 Fields in User Model is:
 
 + id
